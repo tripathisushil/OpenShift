@@ -1,0 +1,41 @@
+{
+  "version": 2,
+  "dashboardMetadata": {
+    "name": "OpenShift – Peak CPU & Memory (All Clusters)",
+    "shared": false,
+    "owner": "Dynatrace",
+    "tags": ["openshift", "kubernetes", "capacity", "multicluster"]
+  },
+  "tiles": [
+    {
+      "tileType": "DATA_EXPLORER",
+      "title": "Peak CPU Utilization (%) by Cluster",
+      "query": "timeseries peak_cpu = max(builtin:containers.cpu.usagePercent), by:{kubernetes.cluster.name}\n| filter kubernetes.distribution == \"openshift\"\n| summarize Peak_CPU_Utilization = max(peak_cpu) by:{kubernetes.cluster.name}\n| sort Peak_CPU_Utilization desc",
+      "visualConfig": {
+        "type": "BAR_CHART",
+        "unit": "PERCENT"
+      },
+      "layout": {
+        "x": 0,
+        "y": 0,
+        "w": 12,
+        "h": 5
+      }
+    },
+    {
+      "tileType": "DATA_EXPLORER",
+      "title": "Peak Memory Utilization (%) by Cluster",
+      "query": "timeseries peak_mem = max(builtin:containers.memory.usagePercent), by:{kubernetes.cluster.name}\n| filter kubernetes.distribution == \"openshift\"\n| summarize Peak_Memory_Utilization = max(peak_mem) by:{kubernetes.cluster.name}\n| sort Peak_Memory_Utilization desc",
+      "visualConfig": {
+        "type": "BAR_CHART",
+        "unit": "PERCENT"
+      },
+      "layout": {
+        "x": 0,
+        "y": 5,
+        "w": 12,
+        "h": 5
+      }
+    }
+  ]
+}
