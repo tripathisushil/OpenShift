@@ -2,17 +2,15 @@
   "version": 2,
   "dashboardMetadata": {
     "name": "OpenShift – Peak CPU & Memory (All Clusters)",
-    "shared": false,
-    "owner": "Dynatrace",
-    "tags": ["openshift", "kubernetes", "capacity", "multicluster"]
+    "shared": false
   },
   "tiles": [
     {
-      "tileType": "DATA_EXPLORER",
+      "tileType": "DQL",
       "title": "Peak CPU Utilization (%) by Cluster",
-      "query": "timeseries peak_cpu = max(builtin:containers.cpu.usagePercent), by:{kubernetes.cluster.name}\n| filter kubernetes.distribution == \"openshift\"\n| summarize Peak_CPU_Utilization = max(peak_cpu) by:{kubernetes.cluster.name}\n| sort Peak_CPU_Utilization desc",
+      "query": "timeseries cpu = max(builtin:containers.cpu.usagePercent), by:{kubernetes.cluster.name}\n| filter kubernetes.distribution == \"openshift\"\n| summarize peak_cpu = max(cpu) by:{kubernetes.cluster.name}\n| sort peak_cpu desc",
       "visualization": {
-        "type": "BAR_CHART"
+        "type": "BAR"
       },
       "layout": {
         "x": 0,
@@ -22,11 +20,11 @@
       }
     },
     {
-      "tileType": "DATA_EXPLORER",
+      "tileType": "DQL",
       "title": "Peak Memory Utilization (%) by Cluster",
-      "query": "timeseries peak_mem = max(builtin:containers.memory.usagePercent), by:{kubernetes.cluster.name}\n| filter kubernetes.distribution == \"openshift\"\n| summarize Peak_Memory_Utilization = max(peak_mem) by:{kubernetes.cluster.name}\n| sort Peak_Memory_Utilization desc",
+      "query": "timeseries mem = max(builtin:containers.memory.usagePercent), by:{kubernetes.cluster.name}\n| filter kubernetes.distribution == \"openshift\"\n| summarize peak_mem = max(mem) by:{kubernetes.cluster.name}\n| sort peak_mem desc",
       "visualization": {
-        "type": "BAR_CHART"
+        "type": "BAR"
       },
       "layout": {
         "x": 0,
